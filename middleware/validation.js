@@ -51,8 +51,28 @@ const isNameValid = async (req, res, next) => {
   }
 };
 
+const isTokenValid = async (req, res, next) => {
+  const msg = [
+    { message: 'Token not found' },
+    { message: 'Expired or invalid token' },
+];
+  try {
+    const { authorization } = req.headers;
+    if (!authorization) return res.status(401).json(msg[0]);
+
+    const splitToken = authorization.split('.');
+    if (splitToken.length !== 3) return res.status(401).json(msg[1]);
+
+    next();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 module.exports = {
   isNameValid,
   isEmailValid,
   isPasswordValid,
+  isTokenValid,
  };
