@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 app.listen(3000, () => console.log('Localhost port: 3000!'));
 
 // não remova esse endpoint, e para o avaliador funcionar
-app.get('/', (request, response) => {
+app.get('/', (_request, response) => {
   response.send();
 });
 

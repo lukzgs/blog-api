@@ -2,11 +2,19 @@ const express = require('express');
 
 const routes = express.Router();
 
-const { getAll, post } = require('../controller/userController');
+const { getUsers, post } = require('../controller/userController');
 
-routes.get('/', getAll);
+const { 
+  isNameValid,
+  isEmailValid,
+  isPasswordValid,
+ } = require('../middleware/validation');
+
+const postValid = [isNameValid, isEmailValid, isPasswordValid];
+
+routes.get('/', getUsers);
 // routes.get('/:id',) ;
-routes.post('/', post);
+routes.post('/', postValid, post);
 // routes.put('/:id', );
 // routes.delete('/:id', );
 
