@@ -18,7 +18,7 @@ const isEmailValid = async (req, res, next) => {
   const msg = [
     { message: '"email" is required' },
     { message: '"email" must be a valid email' },
-    { message: 'User already registered' },
+    // { message: 'User already registered' },
   ];
   try {
     const { email } = req.body;
