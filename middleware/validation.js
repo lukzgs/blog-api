@@ -1,12 +1,14 @@
 const isPasswordValid = async (req, res, next) => {
   const msg = [
     { message: '"password" is required' },
-    { message: '"password" length must be 6 characters long' },    
+    { message: '"password" is not allowed to be empty' },
+    { message: '"password" length must be 6 characters long' },   
   ];
   try {
     const { password } = req.body;
-    if (!password) return res.status(400).json(msg[0]);
-    if (password.length !== 6) return res.status(400).json(msg[1]);
+    if (password === undefined) return res.status(400).json(msg[0]);
+    if (password === '') return res.status(400).json(msg[1]);
+    if (password.length !== 6) return res.status(400).json(msg[2]);
     next();
   } catch (error) {
     console.log(error);
@@ -17,15 +19,16 @@ const isPasswordValid = async (req, res, next) => {
 const isEmailValid = async (req, res, next) => {
   const msg = [
     { message: '"email" is required' },
-    { message: '"email" must be a valid email' },
-    // { message: 'User already registered' },
+    { message: '"email" is not allowed to be empty' },
+    { message: '"email" must be a valid email' }, 
   ];
   try {
     const { email } = req.body;
     const regexEmail = /\S+@\S+\.\S+/;
     const checkedEmail = regexEmail.test(email);
-    if (!email) return res.status(400).json(msg[0]);
-    if (!checkedEmail) return res.status(400).json(msg[1]);
+    if (email === undefined) return res.status(400).json(msg[0]);
+    if (email === '') return res.status(400).json(msg[1]);
+    if (!checkedEmail) return res.status(400).json(msg[2]);
     next();
   } catch (error) {
     console.log(error);
