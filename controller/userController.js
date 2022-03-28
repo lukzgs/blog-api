@@ -1,17 +1,43 @@
 const { User } = require('../models');
 
 const getUsers = async (_req, res) => {
-  const users = await User.findAll();
-  const user = users.map((u) => {
+  try {
+    const users = await User.findAll();
+    const user = users.map((u) => {
+      const object = {
+        id: u.id,
+        displayName: u.displayName,
+        email: u.email,
+        image: u.image,
+      };
+      return object;
+    });
+    return res.status(200).json(user);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Algo deu errado no getUsers' });
+  }
+};
+
+const getUserById = async (req, res) => {
+  const msg = { message: 'User does not exist' };
+  try {
+    const { id: user } = req.params;
+    const find = await User.findOne({ where: { id: user } });
+    if (!find) return res.status(404).json(msg);
+    const { id, displayName, email, image } = find;
     const object = {
-      id: u.id,
-      displayName: u.displayName,
-      email: u.email,
-      image: u.image,
+      id,
+      displayName,
+      email,
+      image,
     };
-    return object;
-  });
-  return res.status(200).json(user);
+
+    return res.status(200).json(object);
+  } catch (e) {
+  console.log(e.message);
+  res.status(500).json({ message: 'Algo deu errado no getUserById' });
+  }
 };
 
 const getUserByEmail = async (request, res) => {
@@ -22,7 +48,7 @@ const getUserByEmail = async (request, res) => {
     return false;
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado' });
+    res.status(500).json({ message: 'Algo deu errado no getUserByEmail' });
   }
 };
 
@@ -44,5 +70,6 @@ const post = async (req, res) => {
 module.exports = {
   getUsers,
   getUserByEmail,
+  getUserById,
   post,
 };
