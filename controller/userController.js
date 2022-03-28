@@ -1,5 +1,6 @@
 const { User } = require('../models');
 const { Category } = require('../models');
+const { PostsCategories } = require('../models');
 
 const getUsers = async (_req, res) => {
   try {
@@ -17,6 +18,18 @@ const getUsers = async (_req, res) => {
   } catch (e) {
     console.log(e.message);
     res.status(500).json({ message: 'Algo deu errado no getUsers' });
+  }
+};
+
+const getCategories = async (_req, res) => {
+  try {
+    const categories = await Category.findAll();
+    console.log('categories :', categories);
+    
+    return res.status(200).json(categories);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Algo deu errado no getCategories' });
   }
 };
 
@@ -78,15 +91,13 @@ const postCategory = async (req, res) => {
   }
 };
 
-const getCategories = async (_req, res) => {
+const postPost = async (req, res) => {
   try {
-    const categories = await Category.findAll();
-    console.log('categories :', categories);
-    
-    return res.status(200).json(categories);
+    const post = await PostsCategories.create(req.body);
+    return res.status(201).json(post);
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado no getCategories' });
+    res.status(500).json({ message: 'Algo deu errado no postPost' });
   }
 };
 
@@ -97,4 +108,5 @@ module.exports = {
   postUser,
   getCategories,
   postCategory,
+  postPost,
 };

@@ -81,10 +81,44 @@ const isTokenValid = async (req, res, next) => {
   }
 };
 
+const isPostValid = async (req, res, next) => {
+  const msg = [
+    { message: '"title" is required' },
+    { message: '"content" is required' },
+];
+  try {
+    const { title } = req.body;
+    if (!title) return res.status(400).json(msg[0]);
+    const { content } = req.body;
+    if (!content) return res.status(400).json(msg[1]);
+    next();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+const isCategoryId = async (req, res, next) => {
+  const msg = [
+    { message: '"categoryIds" is required' },
+    { message: '"categoryIds" not found' }, 
+];
+  try {
+    const { categoryId } = req.body;
+    if (!categoryId) return res.status(400).json(msg[0]);
+    next();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 module.exports = {
   isDisplayNameValid,
   isEmailValid,
   isPasswordValid,
   isTokenValid,
   isNameValid,
+  isPostValid,
+  isCategoryId,
  };

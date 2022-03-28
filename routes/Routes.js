@@ -8,6 +8,7 @@ const {
   postUser,
   postCategory,
   getCategories,
+  postPost,
 } = require('../controller/userController');
 
   const { login } = require('../controller/login');
@@ -18,11 +19,14 @@ const {
   isPasswordValid,
   isTokenValid,
   isNameValid,
+  isPostValid,
+  isCategoryId,
 } = require('../middleware/validation');
 
 const postUserValid = [isDisplayNameValid, isEmailValid, isPasswordValid];
 const postLoginValid = [isEmailValid, isPasswordValid];
 const categoryValid = [isTokenValid, isNameValid];
+const postValid = [isPostValid, isCategoryId, isTokenValid];
 
 routes.post('/login', postLoginValid, login);
 
@@ -32,6 +36,7 @@ routes.get('/categories', isTokenValid, getCategories);
 routes.get('/user', isTokenValid, getUsers);
 routes.get('/user/:id', isTokenValid, getUserById);
 routes.post('/user', postUserValid, postUser);
-// routes.delete('/:id', );
+
+routes.post('/post', postValid, postPost);
 
 module.exports = routes;
