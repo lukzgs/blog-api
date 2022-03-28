@@ -6,7 +6,6 @@ const login = async (req, res, next) => {
   try {
     const { email } = req.body;
     const users = await User.findAll();
-    console.log('loginUser : ', users);
 
     const isEmailThere = users.some((element) => element.email === email);
     if (!isEmailThere) return res.status(400).json(msg);

@@ -1,4 +1,5 @@
 const { User } = require('../models');
+const { Category } = require('../models');
 
 const getUsers = async (_req, res) => {
   try {
@@ -52,7 +53,7 @@ const getUserByEmail = async (request, res) => {
   }
 };
 
-const post = async (req, res) => {
+const postUser = async (req, res) => {
   const msg = { message: 'User already registered' };
   try {
     const isThereAnyEmail = await getUserByEmail(req.body);
@@ -63,7 +64,17 @@ const post = async (req, res) => {
     return res.status(201).json(user);
   } catch (e) {
     console.log(e.message);
-    res.status(500).json(msg);
+    res.status(500).json({ message: 'Algo deu errado no postUser' });
+  }
+};
+
+const postCategory = async (req, res) => {
+  try {
+    const post = await Category.create(req.body);
+    return res.status(201).json(post);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Algo deu errado no postCategory' });
   }
 };
 
@@ -71,5 +82,6 @@ module.exports = {
   getUsers,
   getUserByEmail,
   getUserById,
-  post,
+  postUser,
+  postCategory,
 };
