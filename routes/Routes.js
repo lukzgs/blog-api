@@ -13,21 +13,21 @@ const {
   const { login } = require('../controller/login');
 
 const { 
-  isNameValid,
+  isDisplayNameValid,
   isEmailValid,
   isPasswordValid,
   isTokenValid,
-  isPostCategoryValid,
-  isGetCategoryValid,
+  isNameValid,
 } = require('../middleware/validation');
 
-const postUserValid = [isNameValid, isEmailValid, isPasswordValid];
+const postUserValid = [isDisplayNameValid, isEmailValid, isPasswordValid];
 const postLoginValid = [isEmailValid, isPasswordValid];
+const categoryValid = [isTokenValid, isNameValid];
 
 routes.post('/login', postLoginValid, login);
 
-routes.post('/categories', isPostCategoryValid, postCategory);
-routes.get('/categories', isGetCategoryValid, getCategories);
+routes.post('/categories', categoryValid, postCategory);
+routes.get('/categories', isTokenValid, getCategories);
 
 routes.get('/user', isTokenValid, getUsers);
 routes.get('/user/:id', isTokenValid, getUserById);
