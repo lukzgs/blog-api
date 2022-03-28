@@ -78,10 +78,23 @@ const postCategory = async (req, res) => {
   }
 };
 
+const getCategories = async (_req, res) => {
+  try {
+    const categories = await Category.findAll();
+    console.log('categories :', categories);
+    
+    return res.status(200).json(categories);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Algo deu errado no getCategories' });
+  }
+};
+
 module.exports = {
   getUsers,
   getUserByEmail,
   getUserById,
   postUser,
+  getCategories,
   postCategory,
 };
