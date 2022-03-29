@@ -19,14 +19,16 @@ const blogPostsAttributes = {
     type: DataTypes.INTEGER,
     allowNull: false,
     foreignKey: true,
+    // field: 'user_id',
   },
-  createdAt: {
-    allowNull: false,
+  published: {
+    allowNull: true,
     type: DataTypes.DATE,
     field: 'published',
+    defaultValue: DataTypes.NOW,
   },
-  updatedAt: {
-    allowNull: true,
+  updated: {
+    allowNull: false,
     type: DataTypes.DATE,
     field: 'updated',
   },
@@ -39,14 +41,11 @@ const extra = {
 
 module.exports = (sequelize) => {
   const BlogPost = sequelize.define('BlogPost', blogPostsAttributes, extra);
-
   BlogPost.associate = (models) => {
     BlogPost.belongsTo(models.User, { 
       foreignKey: 'userId',
-      as: 'users',
-      through: BlogPost,
+      as: 'user',
     });
   };
-
   return BlogPost;
 };

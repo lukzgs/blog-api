@@ -7,8 +7,6 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
       },
       title: {
         type: Sequelize.STRING,
@@ -26,19 +24,17 @@ module.exports = {
           key: 'id',
         },
       },
-      createdAt: {
+      published: {
         allowNull: false,
         type: Sequelize.DATE,
-        field: 'published',
       },
-      updatedAt: {
+      updated: {
         allowNull: true,
         type: Sequelize.DATE,
-        field: 'updated',
       }
     });
   },
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface, _Sequelize) => {
     await queryInterface.dropTable('BlogPosts');
   }
 };

@@ -35,8 +35,13 @@ module.exports = (sequelize) => {
   const User = sequelize.define(
     'User', 
     userAttributes,
-    extra,    
+    extra,
   );
-
+    
+  User.associate = (models) => {
+    User.hasOne(models.BlogPost,
+      { foreignKey: 'userId', as: 'blogs' });
+  };
+  
   return User;
 };

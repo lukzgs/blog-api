@@ -1,6 +1,4 @@
 const { User } = require('../models');
-const { Category } = require('../models');
-const { PostsCategories } = require('../models');
 
 const getUsers = async (_req, res) => {
   try {
@@ -18,18 +16,6 @@ const getUsers = async (_req, res) => {
   } catch (e) {
     console.log(e.message);
     res.status(500).json({ message: 'Algo deu errado no getUsers' });
-  }
-};
-
-const getCategories = async (_req, res) => {
-  try {
-    const categories = await Category.findAll();
-    console.log('categories :', categories);
-    
-    return res.status(200).json(categories);
-  } catch (e) {
-    console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado no getCategories' });
   }
 };
 
@@ -66,6 +52,17 @@ const getUserByEmail = async (request, res) => {
   }
 };
 
+const getUserIdByEmail = async (request, res) => {
+  try {
+    const { email } = request;
+    const user = await User.findOne({ where: { email }, raw: true });
+    return user;
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Algo deu errado no getUserByEmail' });
+  }
+};
+
 const postUser = async (req, res) => {
   const msg = { message: 'User already registered' };
   try {
@@ -81,32 +78,14 @@ const postUser = async (req, res) => {
   }
 };
 
-const postCategory = async (req, res) => {
-  try {
-    const post = await Category.create(req.body);
-    return res.status(201).json(post);
-  } catch (e) {
-    console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado no postCategory' });
-  }
-};
-
-const postPost = async (req, res) => {
-  try {
-    const post = await PostsCategories.create(req.body);
-    return res.status(201).json(post);
-  } catch (e) {
-    console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado no postPost' });
-  }
-};
-
 module.exports = {
   getUsers,
   getUserByEmail,
   getUserById,
+  getUserIdByEmail,
   postUser,
-  getCategories,
-  postCategory,
-  postPost,
+  // getCategories,
+  // getPostByCategory,
+  // postCategory,
+  // postBlogPost,
 };

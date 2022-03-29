@@ -1,3 +1,5 @@
+const { getPostByCategory } = require('../controller/categoryController');
+
 const isPasswordValid = async (req, res, next) => {
   const msg = [
     { message: '"password" is required' },
@@ -98,20 +100,55 @@ const isPostValid = async (req, res, next) => {
   }
 };
 
+// eslint-disable-next-line max-lines-per-function
 const isCategoryId = async (req, res, next) => {
-  const msg = [
-    { message: '"categoryIds" is required' },
-    { message: '"categoryIds" not found' }, 
+  const msg = [{ message: '"categoryIds" is required' },
+    { message: '"categoryIds" not found' },
 ];
   try {
-    const { categoryId } = req.body;
-    if (!categoryId) return res.status(400).json(msg[0]);
+    const { categoryIds } = req.body;
+    if (!categoryIds) return res.status(400).json(msg[0]);
+    const categoryExistance = categoryIds.map(async (id) => {
+      const getCategory = await getPostByCategory(id);
+      return getCategory;
+    });
+    const promiseAll = await Promise.all(categoryExistance).then();
+    const badCase = promiseAll.filter((e) => e === null);
+    if (badCase.length !== 0) return res.status(400).json(msg[1]);
     next();
   } catch (error) {
     console.log(error);
     next(error);
   }
 };
+
+// eslint-disable-next-line max-lines-per-function
+// const postBlogPost = async (req, res) => {
+//   try {
+//     const { authorization } = req.headers;    
+//     const tokenAuth = authorization.split(' ')[1];
+//     const decoder = jwt.verify(tokenAuth, process.env.JWT_SECRET);
+//     const { token } = decoder;
+//     console.log('token: ', token);
+//     const user = await getUserIdByEmail(token);
+//     console.log('user: ', user);
+
+//     const { title, content, categoryIds } = req.body;
+//     const post = await BlogPost.create({
+//       title,
+//       content,
+//       userId: user.id,
+//       categoryIds,
+//       published: new Date(),
+//       updated: new Date(),
+//     });
+    
+//     return res.status(201).json(post);
+//   } catch (e) {
+//     console.log(e.message);
+//     res.status(500).json({ message: 'Algo deu errado no postPost' });
+//   }
+// };
 
 module.exports = {
   isDisplayNameValid,

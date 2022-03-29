@@ -7,8 +7,6 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
       },
       name: {
         type: Sequelize.STRING,
@@ -16,7 +14,7 @@ module.exports = {
       }
     });
   },
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface, _Sequelize) => {
     await queryInterface.dropTable('Categories');
   }
 };
