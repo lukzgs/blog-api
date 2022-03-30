@@ -122,34 +122,6 @@ const isCategoryId = async (req, res, next) => {
   }
 };
 
-// eslint-disable-next-line max-lines-per-function
-// const postBlogPost = async (req, res) => {
-//   try {
-//     const { authorization } = req.headers;    
-//     const tokenAuth = authorization.split(' ')[1];
-//     const decoder = jwt.verify(tokenAuth, process.env.JWT_SECRET);
-//     const { token } = decoder;
-//     console.log('token: ', token);
-//     const user = await getUserIdByEmail(token);
-//     console.log('user: ', user);
-
-//     const { title, content, categoryIds } = req.body;
-//     const post = await BlogPost.create({
-//       title,
-//       content,
-//       userId: user.id,
-//       categoryIds,
-//       published: new Date(),
-//       updated: new Date(),
-//     });
-    
-//     return res.status(201).json(post);
-//   } catch (e) {
-//     console.log(e.message);
-//     res.status(500).json({ message: 'Algo deu errado no postPost' });
-//   }
-// };
-
 module.exports = {
   isDisplayNameValid,
   isEmailValid,

@@ -1,7 +1,8 @@
-const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 const { Category } = require('../models');
 const { BlogPost } = require('../models');
+const { getToken } = require('../utils/token');
+
 const { getUserIdByEmail } = require('./userController');
 
 // eslint-disable-next-line max-lines-per-function
@@ -31,11 +32,10 @@ const getBlogPosts = async (_req, res) => {
 // eslint-disable-next-line max-lines-per-function
 const postBlogPost = async (req, res) => {
   try {
-    const { authorization } = req.headers;    
-    const tokenAuth = authorization.split(' ')[1];
-    const decoder = jwt.verify(tokenAuth, process.env.JWT_SECRET);
-    const { token } = decoder;
+    const token = getToken(req.headers);
+    console.log('getToken: ', token);
     const user = await getUserIdByEmail(token);
+    console.log('getUserIdByEmail: ', user);
 
     const { title, content, categoryIds } = req.body;
     const post = await BlogPost.create({

@@ -1,4 +1,6 @@
 const { User } = require('../models');
+const { getToken } = require('../utils/token');
+// const { getBlogPosts } = require('./blogPostController');
 
 const getUsers = async (_req, res) => {
   try {
@@ -78,14 +80,28 @@ const postUser = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  try {
+    const token = getToken(req.headers);
+    const user = await getUserIdByEmail(token);
+    // deleta primeiro o delete do blogs
+    const deletedUSer = await User.destroy({ where: { id: user.id } });
+    // AINDA FALTA DELETAR O BLOG TB, POR ISSO NÃO PASSA NO TESTE
+    // const deleteBlogPost = await BlogPost.destroy({ where: { id: user.id } });
+    /* Cannot delete or update a parent row: a foreign key constraint fails (`blogs_api`.`BlogPosts`, CONSTRAINT `BlogPosts_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `Users` (`id`)) */
+    console.log('deleteUser: ', deletedUSer);
+    return res.status(204).json();
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Algo deu errado no deleteUser' });
+  }
+};
+
 module.exports = {
   getUsers,
   getUserByEmail,
   getUserById,
   getUserIdByEmail,
   postUser,
-  // getCategories,
-  // getPostByCategory,
-  // postCategory,
-  // postBlogPost,
+  deleteUser,
 };

@@ -6,6 +6,7 @@ const {
   getUsers,
   getUserById,
   postUser,
+  deleteUser,
 } = require('../controller/userController');
 
 const { 
@@ -46,9 +47,10 @@ routes.get('/categories', isTokenValid, getCategories);
 routes.get('/user', isTokenValid, getUsers);
 routes.get('/user/:id', isTokenValid, getUserById);
 routes.post('/user', postUserValid, postUser);
+routes.delete('/user/me', isTokenValid, deleteUser);
 
 // post
-routes.post('/post', postBlogPost);
+routes.post('/post', postBlogPostValid, postBlogPost);
 routes.get('/post', isTokenValid, getBlogPosts);
 
 module.exports = routes;
