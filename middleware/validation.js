@@ -122,6 +122,21 @@ const isCategoryId = async (req, res, next) => {
   }
 };
 
+const isPutValid = async (req, res, next) => {
+  const msg = [
+    { message: 'Categories cannot be edited' },    
+  ];
+  try {
+    const { categoryIds } = req.body;
+    if (categoryIds) return res.status(400).json(msg[0]);
+
+    next();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 module.exports = {
   isDisplayNameValid,
   isEmailValid,
@@ -130,4 +145,5 @@ module.exports = {
   isNameValid,
   isPostValid,
   isCategoryId,
+  isPutValid,
  };

@@ -4,10 +4,10 @@ const getToken = (header, res) => {
   try {
     const { authorization } = header;
     // postman
-    // const tokenAuth = authorization.split(' ')[1];    
-    // console.log('tokenAuth : ', tokenAuth);
-    // const decoder = jwt.verify(tokenAuth, process.env.JWT_SECRET);
-    const decoder = jwt.verify(authorization, process.env.JWT_SECRET);
+    const tokenAuth = authorization.split(' ')[1];    
+    console.log('tokenAuth : ', tokenAuth);
+    const decoder = jwt.verify(tokenAuth, process.env.JWT_SECRET);
+    // const decoder = jwt.verify(authorization, process.env.JWT_SECRET);
     const { token } = decoder;
     return token;
   } catch (e) {

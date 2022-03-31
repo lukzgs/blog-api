@@ -1,22 +1,28 @@
 const { User } = require('../models');
 const { getToken } = require('../utils/token');
 
-const getUsers = async (_req, res) => {
+const { getUsersService } = require('../services/user');
+
+const getUsers = async (req, res) => {
   try {
-    const users = await User.findAll();
-    const user = users.map((u) => {
-      const object = {
-        id: u.id,
-        displayName: u.displayName,
-        email: u.email,
-        image: u.image,
-      };
-      return object;
-    });
-    return res.status(200).json(user);
+    const users = await getUsersService();
+    console.log(users);
+    return res.status(200).json(users);
+
+    // const users = await User.findAll();
+    // const user = users.map((u) => {
+    //   const object = {
+    //     id: u.id,
+    //     displayName: u.displayName,
+    //     email: u.email,
+    //     image: u.image,
+    //   };
+    //   return object;
+    // });
+    // return res.status(200).json(user);
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado no getUsers' });
+    res.status(500).json({ message: 'Algo deu errado no getUsersControl' });
   }
 };
 
