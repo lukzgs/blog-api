@@ -27,25 +27,15 @@ const getBlogPosts = async (req, res) => {
   }
 };
 
-// eslint-disable-next-line max-lines-per-function
 const getBlogPostById = async (req, res) => {
   const msg = { message: 'Post does not exist' };
   try {
     const { id } = req.params;
-    console.log('id :', id);
     const find = await BlogPost.findOne({       
-      include: [{
-        model: User,
-        as: 'user', 
-        attributes: { exclude: ['password'] },
-        where: { id },
-       },
-      { model: Category,
-        as: 'categories',
-        through: { attributes: [] },        
+      include: [{ model: User, as: 'user', attributes: { exclude: ['password'] }, where: { id } }, 
+        { model: Category, as: 'categories', through: { attributes: [] },        
       }],
     });
-    console.log('find :', find);
     if (!find) return res.status(404).json(msg);
     return res.status(200).json(find);
   } catch (e) {
