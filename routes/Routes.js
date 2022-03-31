@@ -16,6 +16,7 @@ const {
 
 const {
   getBlogPosts,
+  getBlogPostById,
   postBlogPost,
 } = require('../controller/blogPost');
 
@@ -52,5 +53,6 @@ routes.delete('/user/me', isTokenValid, deleteUser);
 // post
 routes.post('/post', postBlogPostValid, postBlogPost);
 routes.get('/post', isTokenValid, getBlogPosts);
+routes.get('/post/:id', isTokenValid, getBlogPostById);
 
 module.exports = routes;
