@@ -7,17 +7,17 @@ const {
   getUserById,
   postUser,
   deleteUser,
-} = require('../controller/userController');
+} = require('../controller/user');
 
 const { 
   getCategories,
   postCategory,
-} = require('../controller/categoryController');
+} = require('../controller/category');
 
 const {
   getBlogPosts,
   postBlogPost,
-} = require('../controller/blogPostController');
+} = require('../controller/blogPost');
 
   const { login } = require('../controller/login');
 

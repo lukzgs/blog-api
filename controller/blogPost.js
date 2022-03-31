@@ -1,27 +1,26 @@
+const { BlogPost } = require('../models');
 const { User } = require('../models');
 const { Category } = require('../models');
-const { BlogPost } = require('../models');
-const { getToken } = require('../utils/token');
+// const { PostCategory } = require('../models');
 
-const { getUserIdByEmail } = require('./userController');
+const { getToken, signIn } = require('../utils/token');
 
-// eslint-disable-next-line max-lines-per-function
-const getBlogPosts = async (_req, res) => {
+const { getUserIdByEmail } = require('./user');
+
+const getBlogPosts = async (req, res) => {
   try {
+    signIn(req.headers);
     const blogPosts = await BlogPost.findAll({
-      include: [{
+      include: [{ 
         model: User,
-        as: 'user',
-        attributes: { exclude: ['password'] },
-      },
-      {
-        model: Category,
+        as: 'user', 
+        attributes: { exclude: ['password'] } },
+      { model: Category,
         as: 'categories',
-        through: { attributes: [] },
-      },
-    ], 
-      raw: true,
-  });
+        through: { attributes: [] },        
+      }],
+    });    
+    console.log('blogPost :', blogPosts); 
     return res.status(200).json(blogPosts);
   } catch (e) {
     console.log(e.message);
@@ -29,14 +28,10 @@ const getBlogPosts = async (_req, res) => {
   }
 };
 
-// eslint-disable-next-line max-lines-per-function
 const postBlogPost = async (req, res) => {
   try {
     const token = getToken(req.headers);
-    console.log('getToken: ', token);
     const user = await getUserIdByEmail(token);
-    console.log('getUserIdByEmail: ', user);
-
     const { title, content, categoryIds } = req.body;
     const post = await BlogPost.create({
       title,

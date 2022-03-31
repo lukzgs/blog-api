@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 
-const blogPostsAttributes = {
+const blogPostAttributes = {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -25,7 +25,6 @@ const blogPostsAttributes = {
     allowNull: true,
     type: DataTypes.DATE,
     field: 'published',
-    defaultValue: DataTypes.NOW,
   },
   updated: {
     allowNull: false,
@@ -40,7 +39,11 @@ const extra = {
 };
 
 module.exports = (sequelize) => {
-  const BlogPost = sequelize.define('BlogPost', blogPostsAttributes, extra);
+  const BlogPost = sequelize.define(
+    'BlogPost',
+    blogPostAttributes,
+    extra,
+  );
   BlogPost.associate = (models) => {
     BlogPost.belongsTo(models.User, { 
       foreignKey: 'userId',

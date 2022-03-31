@@ -1,4 +1,4 @@
-const { getPostByCategory } = require('../controller/categoryController');
+const { getPostByCategory } = require('../controller/category');
 
 const isPasswordValid = async (req, res, next) => {
   const msg = [

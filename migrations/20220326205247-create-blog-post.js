@@ -27,6 +27,7 @@ module.exports = {
       published: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW,
       },
       updated: {
         allowNull: true,
@@ -38,3 +39,4 @@ module.exports = {
     await queryInterface.dropTable('BlogPosts');
   }
 };
+

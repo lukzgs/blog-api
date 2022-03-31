@@ -1,6 +1,5 @@
 const { User } = require('../models');
 const { getToken } = require('../utils/token');
-// const { getBlogPosts } = require('./blogPostController');
 
 const getUsers = async (_req, res) => {
   try {
