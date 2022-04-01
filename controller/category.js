@@ -1,5 +1,3 @@
-const { Category } = require('../models');
-
 const { 
   getCategoriesServices,
   getPostByCategoryServices,
@@ -18,7 +16,8 @@ const getCategories = async (_req, res) => {
 
 const getPostByCategory = async (req, res) => {
   try {
-    const find = await getPostByCategoryServices(req, res);
+    const { id } = req.body;
+    const find = await getPostByCategoryServices(id);
     return find;
   } catch (e) {
   console.log(e.message);
@@ -28,7 +27,9 @@ const getPostByCategory = async (req, res) => {
 
 const postCategory = async (req, res) => {
   try {
-    const post = await postCategoryServices(req.body);    
+    console.log('postCategory: ', req.body);
+    const { name } = req.body;
+    const post = await postCategoryServices(name);    
     return res.status(201).json(post);
   } catch (e) {
     console.log(e.message);

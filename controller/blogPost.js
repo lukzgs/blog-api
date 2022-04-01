@@ -21,7 +21,6 @@ const getBlogPosts = async (req, res) => {
         through: { attributes: [] },        
       }],
     });    
-    console.log('blogPost :', blogPosts); 
     return res.status(200).json(blogPosts);
   } catch (e) {
     console.log(e.message);
