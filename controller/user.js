@@ -21,16 +21,10 @@ const getUsers = async (_req, res) => {
 const getUserById = async (req, res) => {
   const msg = { message: 'User does not exist' };
   try {
-    const user = await getUserByIdService(req, res);
+    const { id } = req.params;
+    const user = await getUserByIdService(id);
     if (!user) return res.status(404).json(msg);
-    const { id, displayName, email, image } = user;
-    const object = {
-      id,
-      displayName,
-      email,
-      image,
-    };
-    return res.status(200).json(object);
+    return res.status(200).json(user);
   } catch (e) {
   console.log(e.message);
   res.status(500).json({ message: 'Algo deu errado no getUserByIdControl' });

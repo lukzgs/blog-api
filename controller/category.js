@@ -27,7 +27,6 @@ const getPostByCategory = async (req, res) => {
 
 const postCategory = async (req, res) => {
   try {
-    console.log('postCategory: ', req.body);
     const { name } = req.body;
     const post = await postCategoryServices(name);    
     return res.status(201).json(post);

@@ -6,7 +6,6 @@ const { getToken, signIn } = require('../utils/token');
 
 const { getUserIdByEmail } = require('./user');
 
-const { jsonReturn } = require('../utils/errors');
 
 const getBlogPosts = async (req, res) => {
   try {

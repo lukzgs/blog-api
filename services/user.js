@@ -7,15 +7,13 @@ const getUsersService = async () => {
   return users;  
 };
 
-const getUserByIdService = async (req, res) => {
-  try {
-    const { id: user } = req.params;
-    const find = await User.findOne({ where: { id: user }, raw: true });
-    return find;
-  } catch (e) {
-  console.log(e.message);
-  res.status(500).json({ message: 'Algo deu errado no getUserByIdService' });
-  }
+const getUserByIdService = async (id) => {
+  const find = await User.findOne({ 
+    attributes: { exclude: ['password'] },
+    where: { id },
+    raw: true });
+    console.log(find);
+  return find;
 };
 
 const getUserIdByEmailService = async (req, res) => {

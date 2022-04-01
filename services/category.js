@@ -6,7 +6,7 @@ const getCategoriesServices = async () => {
 };
 
 const getPostByCategoryServices = async (id) => {
-    const find = await Category.findOne({ where: { id } });
+    const find = await Category.findOne({ where: { id } });    
     return find; 
 };
 
