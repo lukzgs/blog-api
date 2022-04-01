@@ -1,25 +1,17 @@
 const { User } = require('../models');
 const { getToken } = require('../utils/token');
 
-const { getUsersService } = require('../services/user');
+const { 
+  getUsersService,
+  getUserByIdService,
+  getUserIdByEmailService,
+  postUserService,
+ } = require('../services/user');
 
-const getUsers = async (req, res) => {
+const getUsers = async (_req, res) => {
   try {
     const users = await getUsersService();
-    console.log(users);
-    return res.status(200).json(users);
-
-    // const users = await User.findAll();
-    // const user = users.map((u) => {
-    //   const object = {
-    //     id: u.id,
-    //     displayName: u.displayName,
-    //     email: u.email,
-    //     image: u.image,
-    //   };
-    //   return object;
-    // });
-    // return res.status(200).json(user);
+    return res.status(200).json(users);   
   } catch (e) {
     console.log(e.message);
     res.status(500).json({ message: 'Algo deu errado no getUsersControl' });
@@ -29,21 +21,19 @@ const getUsers = async (req, res) => {
 const getUserById = async (req, res) => {
   const msg = { message: 'User does not exist' };
   try {
-    const { id: user } = req.params;
-    const find = await User.findOne({ where: { id: user } });
-    if (!find) return res.status(404).json(msg);
-    const { id, displayName, email, image } = find;
+    const user = await getUserByIdService(req, res);
+    if (!user) return res.status(404).json(msg);
+    const { id, displayName, email, image } = user;
     const object = {
       id,
       displayName,
       email,
       image,
     };
-
     return res.status(200).json(object);
   } catch (e) {
   console.log(e.message);
-  res.status(500).json({ message: 'Algo deu errado no getUserById' });
+  res.status(500).json({ message: 'Algo deu errado no getUserByIdControl' });
   }
 };
 
@@ -66,19 +56,17 @@ const getUserIdByEmail = async (request, res) => {
     return user;
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado no getUserByEmail' });
+    res.status(500).json({ message: 'Algo deu errado no getUserIdByEmail' });
   }
 };
 
 const postUser = async (req, res) => {
   const msg = { message: 'User already registered' };
   try {
-    const isThereAnyEmail = await getUserByEmail(req.body);
-    if (!isThereAnyEmail) return res.status(409).json(msg);
-    const { displayName, email, password, image } = req.body;
-    const user = await User.create({ displayName, email, password, image });    
-
-    return res.status(201).json(user);
+    const isThereAnyEmail = await getUserIdByEmailService(req, res);
+    if (isThereAnyEmail) return res.status(409).json(msg);
+    const postingUser = await postUserService(req, res);
+    return res.status(201).json(postingUser);
   } catch (e) {
     console.log(e.message);
     res.status(500).json({ message: 'Algo deu errado no postUser' });
