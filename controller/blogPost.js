@@ -1,8 +1,4 @@
-const { BlogPost } = require('../models');
-const { User } = require('../models');
-const { Category } = require('../models');
-
-const { getToken, signIn } = require('../utils/token');
+const { getToken } = require('../utils/token');
 
 const { 
   getBlogPostsService,

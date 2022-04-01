@@ -2,7 +2,7 @@ const { BlogPost } = require('../models');
 const { User } = require('../models');
 const { Category } = require('../models');
 
-const { getUserIdByEmailService } = require('./user');
+// const { getUserIdByEmailService } = require('./user');
 
 const getBlogPostsService = async () => {
   const blogPosts = await BlogPost.findAll({
