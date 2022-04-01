@@ -55,7 +55,7 @@ routes.delete('/user/me', isTokenValid, deleteUser);
 // post
 routes.post('/post', postBlogPostValid, postBlogPost);
 routes.get('/post', isTokenValid, getBlogPosts);
-// routes.get('/post/:id', isTokenValid, getBlogPostById);
+routes.get('/post/:id', isTokenValid, getBlogPostById);
 // routes.put('/post/:id', putValid, putBlogPost);
 
 module.exports = routes;
