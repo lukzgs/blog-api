@@ -100,7 +100,6 @@ const isPostValid = async (req, res, next) => {
   }
 };
 
-// eslint-disable-next-line max-lines-per-function
 const isCategoryId = async (req, res, next) => {
   const msg = [{ message: '"categoryIds" is required' },
     { message: '"categoryIds" not found' },

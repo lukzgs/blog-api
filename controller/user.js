@@ -49,24 +49,13 @@ const getUserByEmail = async (request, res) => {
   }
 };
 
-const getUserIdByEmail = async (request, res) => {
-  try {
-    const { email } = request;
-    const user = await User.findOne({ where: { email }, raw: true });
-    return user;
-  } catch (e) {
-    console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado no getUserIdByEmail' });
-  }
-};
-
 const postUser = async (req, res) => {
   const msg = { message: 'User already registered' };
   try {
     const isThereAnyEmail = await getUserIdByEmailService(req, res);
     if (isThereAnyEmail) return res.status(409).json(msg);
-    const postingUser = await postUserService(req, res);
-    return res.status(201).json(postingUser);
+    const newUser = await postUserService(req, res);
+    return res.status(201).json(newUser);
   } catch (e) {
     console.log(e.message);
     res.status(500).json({ message: 'Algo deu errado no postUser' });
@@ -76,7 +65,7 @@ const postUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const token = getToken(req.headers);
-    const user = await getUserIdByEmail(token);
+    const user = await getUserIdByEmailService(token);
     // deleta primeiro o delete do blogs
     const deletedUSer = await User.destroy({ where: { id: user.id } });
     // AINDA FALTA DELETAR O BLOG TB, POR ISSO NÃO PASSA NO TESTE
@@ -94,7 +83,6 @@ module.exports = {
   getUsers,
   getUserByEmail,
   getUserById,
-  getUserIdByEmail,
   postUser,
   deleteUser,
 };

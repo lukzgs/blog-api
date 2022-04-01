@@ -1,8 +1,14 @@
 const { Category } = require('../models');
 
+const { 
+  getCategoriesServices,
+  getPostByCategoryServices,
+  postCategoryServices,
+ } = require('../services/category');
+
 const getCategories = async (_req, res) => {
   try {
-    const categories = await Category.findAll();    
+    const categories = await getCategoriesServices();    
     return res.status(200).json(categories);
   } catch (e) {
     console.log(e.message);
@@ -10,9 +16,9 @@ const getCategories = async (_req, res) => {
   }
 };
 
-const getPostByCategory = async (id, res) => {
+const getPostByCategory = async (req, res) => {
   try {
-    const find = await Category.findOne({ where: { id } });
+    const find = await getPostByCategoryServices(req, res);
     return find;
   } catch (e) {
   console.log(e.message);
@@ -22,7 +28,7 @@ const getPostByCategory = async (id, res) => {
 
 const postCategory = async (req, res) => {
   try {
-    const post = await Category.create(req.body);    
+    const post = await postCategoryServices(req.body);    
     return res.status(201).json(post);
   } catch (e) {
     console.log(e.message);

@@ -25,11 +25,8 @@ const getUserByIdService = async (req, res) => {
 
 const getUserIdByEmailService = async (req, res) => {
   try {
-    console.log(req.body);
     const { email } = req.body;
-    console.log(email);
     const user = await User.findOne({ where: { email }, raw: true });
-    console.log('ServiceGetIdByEmail :', user);
     return user;
   } catch (e) {
     console.log(e.message);
