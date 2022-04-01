@@ -1,12 +1,12 @@
 const { 
-  getCategoriesServices,
-  getPostByCategoryServices,
-  postCategoryServices,
+  getCategoriesService,
+  getPostByCategoryService,
+  postCategoryService,
  } = require('../services/category');
 
 const getCategories = async (_req, res) => {
   try {
-    const categories = await getCategoriesServices();    
+    const categories = await getCategoriesService();    
     return res.status(200).json(categories);
   } catch (e) {
     console.log(e.message);
@@ -17,7 +17,7 @@ const getCategories = async (_req, res) => {
 const getPostByCategory = async (req, res) => {
   try {
     const { id } = req.body;
-    const find = await getPostByCategoryServices(id);
+    const find = await getPostByCategoryService(id);
     return find;
   } catch (e) {
   console.log(e.message);
@@ -28,7 +28,7 @@ const getPostByCategory = async (req, res) => {
 const postCategory = async (req, res) => {
   try {
     const { name } = req.body;
-    const post = await postCategoryServices(name);    
+    const post = await postCategoryService(name);    
     return res.status(201).json(post);
   } catch (e) {
     console.log(e.message);

@@ -1,22 +1,22 @@
 const { Category } = require('../models');
 
-const getCategoriesServices = async () => {
+const getCategoriesService = async () => {
     const categories = await Category.findAll();
     return categories;
 };
 
-const getPostByCategoryServices = async (id) => {
-    const find = await Category.findOne({ where: { id } });    
+const getPostByCategoryService = async (id) => {
+    const find = await Category.findOne({ where: { id }, raw: true });
     return find; 
 };
 
-const postCategoryServices = async (name) => {
+const postCategoryService = async (name) => {
   const post = await Category.create({ name });    
   return post;
 };
 
 module.exports = {
-  getCategoriesServices,
-  getPostByCategoryServices,
-  postCategoryServices,
+  getCategoriesService,
+  getPostByCategoryService,
+  postCategoryService,
 };

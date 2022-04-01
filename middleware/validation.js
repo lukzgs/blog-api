@@ -1,4 +1,4 @@
-const { getPostByCategory } = require('../controller/category');
+const { getPostByCategoryService } = require('../services/category');
 
 const isPasswordValid = async (req, res, next) => {
   const msg = [
@@ -108,7 +108,8 @@ const isCategoryId = async (req, res, next) => {
     const { categoryIds } = req.body;
     if (!categoryIds) return res.status(400).json(msg[0]);
     const categoryExistance = categoryIds.map(async (id) => {
-      const getCategory = await getPostByCategory(id);
+      const getCategory = await getPostByCategoryService(id);
+      // console.log('getCategory: ', getCategory);
       return getCategory;
     });
     const promiseAll = await Promise.all(categoryExistance).then();

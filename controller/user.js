@@ -31,24 +31,14 @@ const getUserById = async (req, res) => {
   }
 };
 
-const getUserByEmail = async (request, res) => {
-  try {
-    const { email } = request;
-    const user = await User.findOne({ where: { email } });
-    if (!user) return true;
-    return false;
-  } catch (e) {
-    console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado no getUserByEmail' });
-  }
-};
-
 const postUser = async (req, res) => {
   const msg = { message: 'User already registered' };
   try {
-    const isThereAnyEmail = await getUserIdByEmailService(req, res);
+    const { displayName, email, password, image } = req.body;
+    const isThereAnyEmail = await getUserIdByEmailService(email);
     if (isThereAnyEmail) return res.status(409).json(msg);
-    const newUser = await postUserService(req, res);
+    const object = { displayName, email, password, image };
+    const newUser = await postUserService(object);
     return res.status(201).json(newUser);
   } catch (e) {
     console.log(e.message);
@@ -75,7 +65,6 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   getUsers,
-  getUserByEmail,
   getUserById,
   postUser,
   deleteUser,
