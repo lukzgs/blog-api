@@ -26,7 +26,6 @@ const postUserService = async ({ displayName, email, password, image }) => {
 };
 
 const deleteUserService = async (id) => {
-  console.log('recebeu: ', id);
   const user = await User.destroy({ where: { id } });
   return user;
 };

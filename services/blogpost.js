@@ -74,7 +74,6 @@ const putBlogPostService = async ({ id, title, content }) => {
     { title, content },
     { where: { id } },
   );
-  console.log('putBlogPost ', update);
   return update;
 };
 

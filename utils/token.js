@@ -6,7 +6,6 @@ const getToken = (header, res) => {
     // postman
     // const tokenAuth = authorization.split(' ')[1];
     // const decoder = jwt.verify(tokenAuth, process.env.JWT_SECRET);
-    // console.log('tokenAuth : ', tokenAuth);
     const decoder = jwt.verify(authorization, process.env.JWT_SECRET);
     const { token } = decoder;
     return token;

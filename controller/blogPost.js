@@ -79,7 +79,6 @@ const putBlogPost = async (req, res) => {
   }
 };
 
-// eslint-disable-next-line max-lines-per-function
 const deleteBlogPost = async (req, res) => {
   const msg = [
     { message: 'Post does not exist' },
@@ -87,11 +86,8 @@ const deleteBlogPost = async (req, res) => {
   ];
   try {
     const { email } = getToken(req.headers);
-    console.log('email: ', email);
     const { id } = await getUserIdByEmailService(email);
-    console.log('id do user: ', id);
     const { id: postId } = req.params;
-    console.log('id do post', id);
     const getBlogPostId = await getBlogPostsByIdService(postId);    
     if (!getBlogPostId) return res.status(404).json(msg[0]);
     const { user: { id: userId } } = getBlogPostId;
