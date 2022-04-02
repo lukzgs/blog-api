@@ -2,14 +2,14 @@ const express = require('express');
 
 const routes = express.Router();
 
-const { 
+const {
   getUsers,
   getUserById,
   postUser,
   deleteUser,
 } = require('../controller/user');
 
-const { 
+const {
   getCategories,
   postCategory,
 } = require('../controller/category');
@@ -19,11 +19,12 @@ const {
   getBlogPostById,
   postBlogPost,
   putBlogPost,
+  // deleteBlogPost,
 } = require('../controller/blogPost');
 
-  const { login } = require('../controller/login');
+const { login } = require('../controller/login');
 
-const { 
+const {
   isDisplayNameValid,
   isEmailValid,
   isPasswordValid,
@@ -57,5 +58,6 @@ routes.post('/post', postBlogPostValid, postBlogPost);
 routes.get('/post', isTokenValid, getBlogPosts);
 routes.get('/post/:id', isTokenValid, getBlogPostById);
 routes.put('/post/:id', putValid, putBlogPost);
+// routes.delete('/post/:id', putValid, deleteBlogPost);
 
 module.exports = routes;

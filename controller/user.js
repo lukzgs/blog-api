@@ -6,7 +6,17 @@ const {
   getUserByIdService,
   getUserIdByEmailService,
   postUserService,
+  deleteUserService,
  } = require('../services/user');
+
+ const { 
+  deletePostCategoryService,
+ } = require('../services/postCategory');
+
+ const { 
+  getBlogPostsByUserIdService,
+  deleteBlogPostsService,
+ } = require('../services/blogpost');
 
 const getUsers = async (_req, res) => {
   try {
@@ -46,17 +56,27 @@ const postUser = async (req, res) => {
   }
 };
 
+// eslint-disable-next-line max-lines-per-function
 const deleteUser = async (req, res) => {
   try {
-    const token = getToken(req.headers);
-    const user = await getUserIdByEmailService(token);
-    // deleta primeiro o delete do blogs
-    const deletedUSer = await User.destroy({ where: { id: user.id } });
-    // AINDA FALTA DELETAR O BLOG TB, POR ISSO NÃO PASSA NO TESTE
-    // const deleteBlogPost = await BlogPost.destroy({ where: { id: user.id } });
-    /* Cannot delete or update a parent row: a foreign key constraint fails (`blogs_api`.`BlogPosts`, CONSTRAINT `BlogPosts_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `Users` (`id`)) */
-    console.log('deleteUser: ', deletedUSer);
-    return res.status(204).json();
+    const { email } = getToken(req.headers);
+    const { id } = await getUserIdByEmailService(email);
+    // console.log(id);
+    // // procura por todos os posts de um usuário
+    // const getPosts = await getBlogPostsByUserIdService(id);
+    // // delete as tabela na tabela PostCategory
+    // const mapPostCategories = getPosts.map(async (e) => { 
+    //   const deletedCat = await deletePostCategoryService(e.id);
+    //   return deletedCat;
+    // });
+    // // delete as tabela na tabela BlogPost
+    // const mapBlogPost = getPosts.map(async (e) => { 
+    //   const deletedBlogPost = await deleteBlogPostsService(e.id);
+    //   return deletedBlogPost;
+    // });
+    // delete as tabela na tabela User
+    const deletedUser = await deleteUserService(id);
+    return res.status(204).json(deletedUser);
   } catch (e) {
     console.log(e.message);
     res.status(500).json({ message: 'Algo deu errado no deleteUser' });
@@ -69,3 +89,12 @@ module.exports = {
   postUser,
   deleteUser,
 };
+
+// const { categoryIds } = req.body;
+// const categoryExistance = categoryIds.map(async (id) => {
+//   const getCategory = await getPostByCategoryService(id);
+//   return getCategory;
+// });
+// const promiseAll = await Promise.all(categoryExistance).then();
+// const badCase = promiseAll.filter((e) => e === null);
+// if (badCase.length !== 0) return res.status(400).json(msg[1]);

@@ -18,7 +18,7 @@ const getBlogPostsService = async () => {
   return blogPosts;
 };
 
-const getBlogPostByIdService = async (id) => {
+const getBlogPostsByIdService = async (id) => {
   const find = await BlogPost.findOne({
     where: { id },
     include: [{
@@ -32,6 +32,27 @@ const getBlogPostByIdService = async (id) => {
       as: 'categories',
       through: { attributes: [] },
     }],
+  });
+  return find;
+};
+
+const getBlogPostsByUserIdService = async (id) => {
+  const find = await BlogPost.findAll({
+    attributes: ['id'],
+    include: [{
+      model: User,
+      as: 'user',
+      attributes: [],
+      where: { id },
+    },
+    {
+      model:
+      Category,
+      as: 'categories',
+      attributes: [],
+      through: { attributes: [] },
+    }],
+    // raw: true,
   });
   return find;
 };
@@ -57,9 +78,16 @@ const putBlogPostService = async ({ id, title, content }) => {
   return update;
 };
 
+const deleteBlogPostsService = async (id) => {
+  const deleted = await BlogPost.destroy({ where: { id } });
+  return deleted;
+};
+
 module.exports = {
   getBlogPostsService,
-  getBlogPostByIdService,
+  getBlogPostsByIdService,
+  getBlogPostsByUserIdService,
   postBlogPostService,
   putBlogPostService,
+  deleteBlogPostsService,
 };

@@ -3,7 +3,6 @@ const {
  } = require('../services/postCategory');
 
 const postPostCategory = async (id, categoryIds) => {
-  console.log('postId: ', id, 'categoriesIds :', categoryIds);
   const categories = categoryIds;
   const promises = categories.map(async (e) => { 
     const post = await postPostCategoryService(id, e);

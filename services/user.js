@@ -25,10 +25,16 @@ const postUserService = async ({ displayName, email, password, image }) => {
   return user;
 };
 
+const deleteUserService = async (id) => {
+  console.log('recebeu: ', id);
+  const user = await User.destroy({ where: { id } });
+  return user;
+};
+
 module.exports = {
   getUsersService,
   getUserIdByEmailService,
   getUserByIdService,
   postUserService,
-  // deleteUser,
+  deleteUserService,
 };

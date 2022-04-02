@@ -109,7 +109,6 @@ const isCategoryId = async (req, res, next) => {
     if (!categoryIds) return res.status(400).json(msg[0]);
     const categoryExistance = categoryIds.map(async (id) => {
       const getCategory = await getPostByCategoryService(id);
-      // console.log('getCategory: ', getCategory);
       return getCategory;
     });
     const promiseAll = await Promise.all(categoryExistance).then();

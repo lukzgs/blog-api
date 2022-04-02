@@ -6,9 +6,10 @@ const {
 
 const {
   getBlogPostsService,
-  getBlogPostByIdService,
+  getBlogPostsByIdService,
   putBlogPostService,
   postBlogPostService,
+  deleteBlogPostsService,
 } = require('../services/blogpost');
 
 const {
@@ -29,7 +30,7 @@ const getBlogPostById = async (req, res) => {
   const msg = { message: 'Post does not exist' };
   try {
     const { id } = req.params;
-    const user = await getBlogPostByIdService(id);
+    const user = await getBlogPostsByIdService(id);
     if (!user) return res.status(404).json(msg);
     return res.status(200).json(user);
   } catch (e) {
@@ -65,13 +66,32 @@ const putBlogPost = async (req, res) => {
     const user = await getUserIdByEmailService(email);
     const { id } = user;
     const { id: postId } = req.params;
-    const { user: { id: userId } } = await getBlogPostByIdService(id);
+    const { user: { id: userId } } = await getBlogPostsByIdService(id);
     if (userId !== id) return res.status(401).json(msg[0]);
     const { title, content, categoryIds } = req.body;
     if (categoryIds) return res.status(400).json(msg[1]);
     await putBlogPostService({ title, id: postId, content });
-    const updatedPost = await getBlogPostByIdService(postId);
+    const updatedPost = await getBlogPostsByIdService(postId);
     return res.status(200).json(updatedPost);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Algo deu errado no putPost' });
+  }
+};
+
+const deleteBlogPost = async (req, res) => {
+  const msg = [{ message: 'Unauthorized user' },
+  { message: 'Post does not exist' }];
+  try {
+    const { email } = getToken(req.headers);
+    const { id } = await getUserIdByEmailService(email);
+    const { id: postId } = req.params;
+    const { user: { id: userId } } = await getBlogPostsByIdService(postId);
+    if (userId !== id) return res.status(401).json(msg[0]);
+    const getPostById = await getBlogPostsByIdService(postId);
+    if (!getPostById) return res.status(404).json(msg[1]);
+    await deleteBlogPostsService(postId);
+    return res.status(204).json();
   } catch (e) {
     console.log(e.message);
     res.status(500).json({ message: 'Algo deu errado no putPost' });
@@ -83,4 +103,5 @@ module.exports = {
   getBlogPostById,
   postBlogPost,
   putBlogPost,
+  deleteBlogPost,
 };
