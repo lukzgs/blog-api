@@ -2,17 +2,14 @@ const { getToken } = require('../utils/token');
 
 const { 
   getBlogPostsService,
+  getBlogPostByIdService,
   putBlogPostService,
+  postBlogPostService, 
  } = require('../services/blogPost');
  
  const { 
   postPostCategory,
  } = require('./postCategory');
-
-const { 
-  getBlogPostByIdService,
-  postBlogPostService,  
-} = require('../services/blogPost');
 
 const { 
   getUserIdByEmailService,  
