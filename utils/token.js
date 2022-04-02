@@ -19,10 +19,6 @@ const getToken = (header, res) => {
 const signIn = (header, res) => {
   try {
     const { authorization } = header;
-    // postman
-    // const tokenAuth = authorization.split(' ')[1];    
-    // console.log('tokenAuth : ', tokenAuth);
-    // const decoder = jwt.verify(tokenAuth, process.env.JWT_SECRET);
     const decoder = jwt.sign(authorization, process.env.JWT_SECRET);
     return decoder;
   } catch (e) {

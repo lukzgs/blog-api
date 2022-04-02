@@ -18,7 +18,7 @@ const {
   getUserIdByEmailService,  
 } = require('../services/user');
 
-const getBlogPosts = async (req, res) => {
+const getBlogPosts = async (_req, res) => {
   try {
     const post = await getBlogPostsService();
     return res.status(200).json(post);
