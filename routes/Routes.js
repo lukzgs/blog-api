@@ -19,7 +19,7 @@ const {
   getBlogPostById,
   postBlogPost,
   putBlogPost,
-  // deleteBlogPost,
+  deleteBlogPost,
 } = require('../controller/blogPost');
 
 const { login } = require('../controller/login');
@@ -58,6 +58,6 @@ routes.post('/post', postBlogPostValid, postBlogPost);
 routes.get('/post', isTokenValid, getBlogPosts);
 routes.get('/post/:id', isTokenValid, getBlogPostById);
 routes.put('/post/:id', putValid, putBlogPost);
-// routes.delete('/post/:id', putValid, deleteBlogPost);
+routes.delete('/post/:id', isTokenValid, deleteBlogPost);
 
 module.exports = routes;

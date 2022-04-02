@@ -79,22 +79,28 @@ const putBlogPost = async (req, res) => {
   }
 };
 
+// eslint-disable-next-line max-lines-per-function
 const deleteBlogPost = async (req, res) => {
-  const msg = [{ message: 'Unauthorized user' },
-  { message: 'Post does not exist' }];
+  const msg = [
+    { message: 'Post does not exist' },
+    { message: 'Unauthorized user' },
+  ];
   try {
     const { email } = getToken(req.headers);
+    console.log('email: ', email);
     const { id } = await getUserIdByEmailService(email);
+    console.log('id do user: ', id);
     const { id: postId } = req.params;
-    const { user: { id: userId } } = await getBlogPostsByIdService(postId);
-    if (userId !== id) return res.status(401).json(msg[0]);
-    const getPostById = await getBlogPostsByIdService(postId);
-    if (!getPostById) return res.status(404).json(msg[1]);
+    console.log('id do post', id);
+    const getBlogPostId = await getBlogPostsByIdService(postId);    
+    if (!getBlogPostId) return res.status(404).json(msg[0]);
+    const { user: { id: userId } } = getBlogPostId;
+    if (userId !== id) return res.status(401).json(msg[1]);
     await deleteBlogPostsService(postId);
     return res.status(204).json();
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado no putPost' });
+    res.status(500).json({ message: 'Algo deu errado no deletePost' });
   }
 };
 

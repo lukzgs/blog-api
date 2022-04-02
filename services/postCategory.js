@@ -5,8 +5,8 @@ const postPostCategoryService = async (postId, categoryId) => {
   return post;
 };
 
+// extra
 const deletePostCategoryService = async (id) => {
-  console.log('recebeu: ', id);
   const deletedPost = await PostCategory.destroy({ where: { postId: id } });    
   return deletedPost;
 };
