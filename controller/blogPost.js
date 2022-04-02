@@ -1,15 +1,15 @@
 const { getToken } = require('../utils/token');
 
 const { 
+  postPostCategory,
+ } = require('./postCategory');
+
+const { 
   getBlogPostsService,
   getBlogPostByIdService,
   putBlogPostService,
   postBlogPostService, 
  } = require('../services/blogPost');
- 
- const { 
-  postPostCategory,
- } = require('./postCategory');
 
 const { 
   getUserIdByEmailService,  
