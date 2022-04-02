@@ -18,7 +18,6 @@ const {
   getUserIdByEmailService,
   
 } = require('../services/user');
-const { restart } = require('nodemon');
 
 const getBlogPosts = async (req, res) => {
   try {
@@ -62,23 +61,19 @@ const postBlogPost = async (req, res) => {
   }
 };
 
-// eslint-disable-next-line max-lines-per-function
 const putBlogPost = async (req, res) => {
   const msg = [{ message: 'Unauthorized user' },
   { message: 'Categories cannot be edited' }];
   try {
-    const getEmail = getToken(req.headers);
-    const { email } = getEmail;
+    const { email } = getToken(req.headers);
     const user = await getUserIdByEmailService(email);
-    const { id } = user;    
+    const { id } = user;
     const { id: postId } = req.params;
-
-    const post = await getBlogPostByIdService(id);
-    const { user: { id: userId } } = post;
+    const { user: { id: userId } } = await getBlogPostByIdService(id);
     if (userId !== id) return res.status(401).json(msg[0]);
     const { title, content, categoryIds } = req.body;
     if (categoryIds) return res.status(400).json(msg[1]);
-    const update = await putBlogPostService({ title, id: postId, content });
+    await putBlogPostService({ title, id: postId, content });
     const updatedPost = await getBlogPostByIdService(postId);
     return res.status(200).json(updatedPost);
   } catch (e) {
