@@ -1,18 +1,18 @@
 const { getToken } = require('../utils/token');
 
-const { 
+const {
   postPostCategory,
- } = require('./postCategory');
+} = require('./postCategory');
 
-const { 
+const {
   getBlogPostsService,
   getBlogPostByIdService,
   putBlogPostService,
-  postBlogPostService, 
- } = require('../services/blogPost');
+  postBlogPostService,
+} = require('../services/blogpost');
 
-const { 
-  getUserIdByEmailService,  
+const {
+  getUserIdByEmailService,
 } = require('../services/user');
 
 const getBlogPosts = async (_req, res) => {

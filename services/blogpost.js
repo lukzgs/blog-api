@@ -4,33 +4,36 @@ const { Category } = require('../models');
 
 const getBlogPostsService = async () => {
   const blogPosts = await BlogPost.findAll({
-    include: [{ 
+    include: [{
       model: User,
-      as: 'user', 
-      attributes: { exclude: ['password'] } },
-    { model: Category,
+      as: 'user',
+      attributes: { exclude: ['password'] }
+    },
+    {
+      model: Category,
       as: 'categories',
-      through: { attributes: [] },        
+      through: { attributes: [] },
     }],
-  });    
+  });
   return blogPosts;
 };
 
 const getBlogPostByIdService = async (id) => {
-  const find = await BlogPost.findOne({ 
-    where: { id },      
-    include: [{ 
+  const find = await BlogPost.findOne({
+    where: { id },
+    include: [{
       model: User,
       as: 'user',
       attributes: { exclude: ['password'] },
-    }, 
-      { model:
+    },
+    {
+      model:
         Category,
-        as: 'categories',
-        through: { attributes: [] },        
+      as: 'categories',
+      through: { attributes: [] },
     }],
   });
-  return find;  
+  return find;
 };
 
 const postBlogPostService = async (object) => {
@@ -42,18 +45,18 @@ const postBlogPostService = async (object) => {
     published: new Date(),
     updated: new Date(),
   });
-  return post;  
+  return post;
 };
 
 const putBlogPostService = async ({ id, title, content }) => {
   const update = await BlogPost.update(
-    { title, content }, 
+    { title, content },
     { where: { id } },
   );
   console.log('putBlogPost ', update);
   return update;
 };
-     
+
 module.exports = {
   getBlogPostsService,
   getBlogPostByIdService,
