@@ -7,7 +7,7 @@ const getBlogPostsService = async () => {
     include: [{
       model: User,
       as: 'user',
-      attributes: { exclude: ['password'] }
+      attributes: { exclude: ['password'] },
     },
     {
       model: Category,
