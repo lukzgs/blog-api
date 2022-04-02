@@ -18,7 +18,7 @@ const {
   getBlogPosts,
   getBlogPostById,
   postBlogPost,
-  // putBlogPost,
+  putBlogPost,
 } = require('../controller/blogPost');
 
   const { login } = require('../controller/login');
@@ -37,7 +37,7 @@ const postUserValid = [isDisplayNameValid, isEmailValid, isPasswordValid];
 const postLoginValid = [isEmailValid, isPasswordValid];
 const categoryValid = [isTokenValid, isNameValid];
 const postBlogPostValid = [isPostValid, isCategoryId, isTokenValid];
-// const putValid = [isPostValid, isTokenValid];
+const putValid = [isPostValid, isTokenValid];
 
 // login
 routes.post('/login', postLoginValid, login);
@@ -56,6 +56,6 @@ routes.delete('/user/me', isTokenValid, deleteUser);
 routes.post('/post', postBlogPostValid, postBlogPost);
 routes.get('/post', isTokenValid, getBlogPosts);
 routes.get('/post/:id', isTokenValid, getBlogPostById);
-// routes.put('/post/:id', putValid, putBlogPost);
+routes.put('/post/:id', putValid, putBlogPost);
 
 module.exports = routes;

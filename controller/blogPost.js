@@ -2,17 +2,23 @@ const { getToken } = require('../utils/token');
 
 const { 
   getBlogPostsService,
- } = require('../services/blogpost');
+  putBlogPostService,
+ } = require('../services/blogPost');
+ 
+ const { 
+  postPostCategory,
+ } = require('./postCategory');
 
 const { 
   getBlogPostByIdService,
   postBlogPostService,  
-} = require('../services/blogpost');
+} = require('../services/blogPost');
 
 const { 
   getUserIdByEmailService,
   
 } = require('../services/user');
+const { restart } = require('nodemon');
 
 const getBlogPosts = async (req, res) => {
   try {
@@ -44,9 +50,10 @@ const postBlogPost = async (req, res) => {
     const user = await getUserIdByEmailService(email);
     const { id } = user;
     const { title, content, categoryIds } = req.body;
-    const object = { id, title, content, categoryIds };
+    const object = { id, title, content };
     const blogPost = await postBlogPostService(object);
     const { id: postId } = blogPost;
+    await postPostCategory(postId, categoryIds);
     const returning = { id: postId, userId: id, title, content };
     return res.status(201).json(returning);
   } catch (e) {
@@ -56,41 +63,33 @@ const postBlogPost = async (req, res) => {
 };
 
 // eslint-disable-next-line max-lines-per-function
-// const putBlogPost = async (req, res) => {
-//   const msg = { message: 'Unauthorized user' };
-//   const msgCode = { message: 'Unauthorized user', code: 404 };
-//   try {
-//     const getEmail = getToken(req.headers);
-//     const { email } = getEmail;
-//     const user = await getUserIdByEmailService(email);
-//     const { user } = req.params;
+const putBlogPost = async (req, res) => {
+  const msg = [{ message: 'Unauthorized user' },
+  { message: 'Categories cannot be edited' }];
+  try {
+    const getEmail = getToken(req.headers);
+    const { email } = getEmail;
+    const user = await getUserIdByEmailService(email);
+    const { id } = user;    
+    const { id: postId } = req.params;
 
-//     // return jsonReturn(msgCode, res);
-
-//     const post = await getBlogPostById(req);
-//     console.log('post :', post);
-
-    // if (user.id !== post.user.id) return res.status(401).json(msg);
-
-//     const { title, content } = req.body;
-//     const update = await BlogPost.update(
-//       { title, content }, 
-//       { where: { id } },
-// ); 
-    // console.log('post: ', post);
-    // const result = await getBlogPostById();
-    // console.log('result: ', result);
-
-//     return res.status(200).json(user);
-//   } catch (e) {
-//     console.log(e.message);
-//     res.status(500).json({ message: 'Algo deu errado no putPost' });
-//   }
-// };
+    const post = await getBlogPostByIdService(id);
+    const { user: { id: userId } } = post;
+    if (userId !== id) return res.status(401).json(msg[0]);
+    const { title, content, categoryIds } = req.body;
+    if (categoryIds) return res.status(400).json(msg[1]);
+    const update = await putBlogPostService({ title, id: postId, content });
+    const updatedPost = await getBlogPostByIdService(postId);
+    return res.status(200).json(updatedPost);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Algo deu errado no putPost' });
+  }
+};
 
 module.exports = {
   getBlogPosts,
   getBlogPostById,
   postBlogPost,
-  // putBlogPost,
+  putBlogPost,
 };

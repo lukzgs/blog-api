@@ -2,8 +2,6 @@ const { BlogPost } = require('../models');
 const { User } = require('../models');
 const { Category } = require('../models');
 
-// const { getUserIdByEmailService } = require('./user');
-
 const getBlogPostsService = async () => {
   const blogPosts = await BlogPost.findAll({
     include: [{ 
@@ -19,12 +17,12 @@ const getBlogPostsService = async () => {
 };
 
 const getBlogPostByIdService = async (id) => {
-  const find = await BlogPost.findOne({       
+  const find = await BlogPost.findOne({ 
+    where: { id },      
     include: [{ 
       model: User,
       as: 'user',
       attributes: { exclude: ['password'] },
-      where: { id },
     }, 
       { model:
         Category,
@@ -35,31 +33,30 @@ const getBlogPostByIdService = async (id) => {
   return find;  
 };
 
-const postBlogPostService = async ({ id, title, content, categoryIds }) => {
-  // const { id, title, content, categoryIds } = object;
+const postBlogPostService = async (object) => {
+  const { id, title, content } = object;
   const post = await BlogPost.create({
     title,
     content,
     userId: id,
-    categoryIds,
     published: new Date(),
     updated: new Date(),
   });
   return post;  
 };
 
-// const putBlogPost = async () => {
-//   const { title, content } = req.body;
-//   const update = await BlogPost.update(
-//     { title, content }, 
-//     { where: { id } },
-// ); 
-//   return update;
-// };
-
+const putBlogPostService = async ({ id, title, content }) => {
+  const update = await BlogPost.update(
+    { title, content }, 
+    { where: { id } },
+  );
+  console.log('putBlogPost ', update);
+  return update;
+};
+     
 module.exports = {
   getBlogPostsService,
   getBlogPostByIdService,
   postBlogPostService,
-  // putBlogPost,
+  putBlogPostService,
 };
