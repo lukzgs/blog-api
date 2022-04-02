@@ -15,8 +15,7 @@ const {
 } = require('../services/blogPost');
 
 const { 
-  getUserIdByEmailService,
-  
+  getUserIdByEmailService,  
 } = require('../services/user');
 
 const getBlogPosts = async (req, res) => {
