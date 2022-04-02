@@ -1,4 +1,3 @@
-const { User } = require('../models');
 const { getToken } = require('../utils/token');
 
 const { 
@@ -8,15 +7,6 @@ const {
   postUserService,
   deleteUserService,
  } = require('../services/user');
-
- const { 
-  deletePostCategoryService,
- } = require('../services/postCategory');
-
- const { 
-  getBlogPostsByUserIdService,
-  deleteBlogPostsService,
- } = require('../services/blogpost');
 
 const getUsers = async (_req, res) => {
   try {
@@ -56,25 +46,10 @@ const postUser = async (req, res) => {
   }
 };
 
-// eslint-disable-next-line max-lines-per-function
 const deleteUser = async (req, res) => {
   try {
     const { email } = getToken(req.headers);
     const { id } = await getUserIdByEmailService(email);
-    // console.log(id);
-    // // procura por todos os posts de um usuário
-    // const getPosts = await getBlogPostsByUserIdService(id);
-    // // delete as tabela na tabela PostCategory
-    // const mapPostCategories = getPosts.map(async (e) => { 
-    //   const deletedCat = await deletePostCategoryService(e.id);
-    //   return deletedCat;
-    // });
-    // // delete as tabela na tabela BlogPost
-    // const mapBlogPost = getPosts.map(async (e) => { 
-    //   const deletedBlogPost = await deleteBlogPostsService(e.id);
-    //   return deletedBlogPost;
-    // });
-    // delete as tabela na tabela User
     const deletedUser = await deleteUserService(id);
     return res.status(204).json(deletedUser);
   } catch (e) {
@@ -89,12 +64,3 @@ module.exports = {
   postUser,
   deleteUser,
 };
-
-// const { categoryIds } = req.body;
-// const categoryExistance = categoryIds.map(async (id) => {
-//   const getCategory = await getPostByCategoryService(id);
-//   return getCategory;
-// });
-// const promiseAll = await Promise.all(categoryExistance).then();
-// const badCase = promiseAll.filter((e) => e === null);
-// if (badCase.length !== 0) return res.status(400).json(msg[1]);
