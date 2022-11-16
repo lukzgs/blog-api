@@ -96,12 +96,9 @@ module.exports = {
  - `password: process.env.MYSQL_PASSWORD`;
 
 #### Variável JWT (opcional):
-`JWT_SECRET`
-
-**Também poderá ser utilizada esta variável de ambiente para o SECRET do JWT**
+ - `JWT_SECRET`
 
 #### Status HTTP
-
 Tenha em mente que todas as "respostas" respeitam os [status do protocolo HTTP](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status) com base no que o REST prega.
 
 Detalhes:
@@ -155,15 +152,10 @@ Detalhes:
   **Os dados acima são fictícios, e estão aqui apenas como exemplo**  
 
   **OBS: Os testes irão rodar através do seu migrate usando os seguintes comandos:**
-
   "drop": "npx sequelize-cli db:drop $" -- Dropa o banco
-
   "prestart": "npx sequelize-cli db:create && npx sequelize-cli db:migrate $" -- Cria o banco e gera as tabelas
-
   "seed": "npx sequelize-cli db:seed:all $", -- Insere dados na tabela
-
-  **Então preste bastante atenção se estiver errado o avaliador não irá funcionar**
-
+  
   **Haverá um arquivo na pasta `/seeders` dentro dela irá conter as querys para inserir no banco `não remova ela o avaliador irá usar ela`.**
 
 ## Lista de Requisitos:
