@@ -45,8 +45,6 @@ Para poder rodar os `ESLint` em um projeto basta executar o comando `npm run lin
 
 Você também pode instalar o plugin do `ESLint` no `VSCode`, bastar ir em extensões e baixar o [plugin `ESLint`](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint).
 
-# Requisitos desenvolvidos no projeto:
-
 ### 👀 Observações importantes:
 
 Há um arquivo `index.js` no repositório. Não remova, nele, o seguinte trecho de código:
@@ -159,7 +157,8 @@ Detalhes:
   
   **Haverá um arquivo na pasta `/seeders` dentro dela irá conter as querys para inserir no banco `não remova ela o avaliador irá usar ela`.**
 
-## Lista de Requisitos:
+
+# Requisitos desenvolvidos no projeto:
 
 ### 1 - Sua aplicação deve ter o endpoint POST `/user`
 
