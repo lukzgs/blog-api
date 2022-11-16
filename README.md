@@ -13,8 +13,9 @@ Neste projeto, o backend foi desenvolvido usando `Node.js`, `ORM` com o pacote `
 2. Instale as dependências;
   * `npm install`
 3. Abra o MySQL;
-4. Crie uma branch a partir da branch `main`;
-5. Have fun!
+4. Crie um arquivo .env e defina `HOSTNAME`, `MYSQL_USER` e `MYSQL_PASSWORD`, caso contrário não irá conseguir conectar ao database;
+5. Crie uma branch a partir da branch `main`;
+6. Have fun!
 OBS: Para fazer um post é necessário usuário e login.
 
 ### Execução de testes unitários
