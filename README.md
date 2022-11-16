@@ -24,7 +24,7 @@ Vamos usar o Jest para executar os testes, use o comando a seguir para executar 
 npm test
 ```
 
-Caso queira executar só um arquivo de test use o seguinte comando, considerado que quer testar o arquivo `tests/req07-createPost.test.js`:
+Caso queira executar só um arquivo de test use o seguinte comando:
 
 ```sh
 npm test tests/req07-createPost.test.js
