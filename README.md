@@ -1,53 +1,21 @@
 # Boas vindas ao repositório do API de Blogs!
+ - Esse projeto foi desenvolvido durante o curso de desenvolvimento web @ Trybe
 
-# Sumário
+# Habilidades Desenvolvidas no projeto
 
-- [Habilidades](#habilidades)
-- [Entregáveis](#entregáveis)
-  - [O que deverá ser desenvolvido](#o-que-deverá-ser-desenvolvido)
-  - [Desenvolvimento](#desenvolvimento)
-  - [Data de entrega](#data-de-entrega)
-- [Instruções para entregar seu projeto](#instruções-para-entregar-seu-projeto)
-  - [Antes de começar a desenvolver](#antes-de-começar-a-desenvolver)
-  - [Durante o desenvolvimento](#durante-o-desenvolvimento)
-  - [Execução de testes unitários](#execução-de-testes-unitários)
-- [Como desenvolver](#como-desenvolver)
-  - [Linter](#linter)
-- [Requisitos do projeto](#requisitos-do-projeto)
-  - [Antes de começar](#antes-de-começar)
-  - [Observações importantes](#-observações-importantes)
-    - [Dicas](#dicas)
-  - [Lista de Requisitos](#lista-de-requisitos)
-    - [1 - Sua aplicação deve ter o endpoint POST `/user`](#1---sua-aplicação-deve-ter-o-endpoint-post-user)
-    - [2 - Sua aplicação deve ter o endpoint POST `/login`](#2---sua-aplicação-deve-ter-o-endpoint-post-login)
-    - [3 - Sua aplicação deve ter o endpoint GET `/user`](#3---sua-aplicação-deve-ter-o-endpoint-get-user)
-    - [4 - Sua aplicação deve ter o endpoint GET `/user/:id`](#4---sua-aplicação-deve-ter-o-endpoint-get-userid)
-    - [5 - Sua aplicação deve ter o endpoint POST `/categories`](#5---sua-aplicação-deve-ter-o-endpoint-post-categories)
-    - [6 - Sua aplicação deve ter o endpoint GET `/categories`](#6---sua-aplicação-deve-ter-o-endpoint-get-categories)
-    - [7 - Sua aplicação deve ter o endpoint POST `/post`](#7---sua-aplicação-deve-ter-o-endpoint-post-post)
-    - [8 - Sua aplicação deve ter o endpoint GET `/post`](#8---sua-aplicação-deve-ter-o-endpoint-get-post)
-    - [9 - Sua aplicação deve ter o endpoint GET `post/:id`](#9---sua-aplicação-deve-ter-o-endpoint-get-postid)
-    - [10 - Sua aplicação deve ter o endpoint PUT `/post/:id`](#10---sua-aplicação-deve-ter-o-endpoint-put-postid)
-    - [Requisitos Bônus](#requisitos-bônus)
-    - [11 - Sua aplicação deve ter o endpoint DELETE `post/:id`](#11---sua-aplicação-deve-ter-o-endpoint-delete-postid)
-    - [12 - Sua aplicação deve ter o endpoint DELETE `/user/me`](#12---sua-aplicação-deve-ter-o-endpoint-delete-userme)
-    - [13 - Sua aplicação deve ter o endpoint GET `post/search?q=:searchTerm`](#13---sua-aplicação-deve-ter-o-endpoint-get-postsearchqsearchterm)
-- [Avisos Finais](#avisos-finais)
-
-# Habilidades 
-
-Nesse projeto, você foi desenvolvido o back-end usando `Node.js`, `ORM` com o pacote `sequelize` do `npm`, e será capaz de:
+Neste projeto, o backend foi desenvolvido usando `Node.js`, `ORM` com o pacote `sequelize` do `npm`, e será capaz de:
  - Criar e associar tabelas usando `models` do `sequelize`
  - Construir endpoints para consumir os models que criar 
  - Fazer um `CRUD` com o `ORM`
 
-Para fazer um post é necessário usuário e login.
-
 ### Para ver o projeto é muito simples
-1. Clone o repositório
-2. Instale as dependências
+1. Clone o repositório;
+2. Instale as dependências;
   * `npm install`
-3. Crie uma branch a partir da branch `main`
+3. Abra o MySQL;
+4. Crie uma branch a partir da branch `main`;
+5. Have fun!
+OBS: Para fazer um post é necessário usuário e login.
 
 ### Execução de testes unitários
 Vamos usar o Jest para executar os testes, use o comando a seguir para executar todos os testes: 
@@ -70,29 +38,15 @@ npm test req07
 ## Linter
 
 Para garantir a qualidade do código, usaremos o [ESLint](https://eslint.org/) para fazer a sua análise estática.
-
 Este projeto já vem com as dependências relacionadas ao _linter_ configuradas nos arquivos `package.json` nos seguintes caminhos:
 
-- `sd-015-b-project-blogs-api/package.json`
-
-Para poder rodar os `ESLint` em um projeto basta executar o comando `npm install` dentro do projeto e depois `npm run lint`. Se a análise do `ESLint` encontrar problemas no seu código, tais problemas serão mostrados no seu terminal. Se não houver problema no seu código, nada será impresso no seu terminal.
+Para poder rodar os `ESLint` em um projeto basta executar o comando `npm run lint`. Se a análise do `ESLint` encontrar problemas no seu código, tais problemas serão mostrados no seu terminal. Se não houver problema no seu código, nada será impresso no seu terminal.
 
 Você também pode instalar o plugin do `ESLint` no `VSCode`, bastar ir em extensões e baixar o [plugin `ESLint`](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint).
 
-⚠ PULL REQUESTS COM ISSUES DE LINTER NÃO SERÃO AVALIADAS. ATENTE-SE PARA RESOLVÊ-LAS ANTES DE FINALIZAR O DESENVOLVIMENTO! ⚠
-
----
-# Requisitos do projeto:
-
-## Antes de começar:
-
-### ⚠️ Leia-os atentamente e siga à risca o que for pedido. ⚠️
+# Requisitos desenvolvidos no projeto:
 
 ### 👀 Observações importantes:
-
-Em cada requisito você encontrará uma imagem de um protótipo de como sua aplicação deve ficar. Estilo da página não será avaliado.
-
-O não cumprimento de um requisito, total ou parcialmente, impactará em sua avaliação.
 
 Há um arquivo `index.js` no repositório. Não remova, nele, o seguinte trecho de código:
 
@@ -106,7 +60,7 @@ app.get('/', (request, response) => {
 
 **Faça essas configurações também para as variáveis de ambiente usadas nesses arquivo:**
 
-`sd-015-b-project-blogs-api/config/config.js`
+`blogs-api/config/config.js`
 
 ```
 module.exports = {
@@ -135,48 +89,28 @@ module.exports = {
 ```
 
 **(Neste arquivo é obrigatório deixar o nome do database como `"database": 'blogs_api'`)**
-
 **É essencial usar essas 3 variáveis no arquivo acima:**
-
 #### Variáveis:
-
-`host: process.env.HOSTNAME`
-
-`user: process.env.MYSQL_USER`
-
-`password: process.env.MYSQL_PASSWORD`
-
-**Com elas que iremos conseguir conectar ao banco do avaliador automático**
+ - `host: process.env.HOSTNAME`;
+ - `user: process.env.MYSQL_USER`;
+ - `password: process.env.MYSQL_PASSWORD`;
 
 #### Variável JWT (opcional):
-
 `JWT_SECRET`
 
 **Também poderá ser utilizada esta variável de ambiente para o SECRET do JWT**
 
-### Dicas
-
 #### Status HTTP
 
-Tenha em mente que todas as "respostas" devem respeitar os [status do protocolo HTTP](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status) com base no que o REST prega.
+Tenha em mente que todas as "respostas" respeitam os [status do protocolo HTTP](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status) com base no que o REST prega.
 
-Alguns exemplos:
-
-  - Requisições que precisam de token mas não o receberam devem retornar um código de `status 401`;
-
-  - Requisições que não seguem o formato pedido pelo servidor devem retornar um código de `status 400`;
-
-  - Um problema inesperado no servidor deve retornar um código de `status 500`;
-
-  - Um acesso ao criar um recurso, no nosso caso usuário ou post, deve retornar um código de `status 201`.
-
----
-
-#### Os seguintes pontos serão avaliados:
-
-- O seu projeto deverá usar um `ORM` para criar e atualizar o seu banco. A clonagem do projeto seguida de um comando de migrate deve deixá-lo em sua forma esperada.
-
-- Deve conter uma tabela chamada **Users**, contendo dados com a seguinte estrutura::
+Detalhes:
+  - Requisições que precisam de token mas não o recebem retornam código `status 401`;
+  - Requisições que não seguem o formato pedido pelo servidor retornam código `status 400`;
+  - Um problema inesperado no servidor retorna código `status 500`;
+  - Um acesso ao criar um recurso, no caso usuário ou post, retorna código `status 201`.
+  - O projeto usa `ORM` para criar e atualizar o seu banco. A clonagem do projeto seguida de um comando de migrate deve deixá-lo em sua forma esperada.
+  - A tabela **Users** contém dados com a seguinte estrutura:
 
   ```json
   {
@@ -187,7 +121,7 @@ Alguns exemplos:
     "image": "http://4.bp.blogspot.com/_YA50adQ-7vQ/S1gfR_6ufpI/AAAAAAAAAAk/1ErJGgRWZDg/S45/brett.png"
   }
   ```
-- Deve conter uma tabela chamada **Categories**, contendo dados com a seguinte estrutura::
+- A tabela **Categories** contém dados com a seguinte estrutura:
 
   ```json
   {
@@ -196,7 +130,7 @@ Alguns exemplos:
   }
   ```
 
-- Deve conter uma tabela chamada **PostsCategories**, contendo dados com a seguinte estrutura:
+- A tabela **PostsCategories** contém dados com a seguinte estrutura:
 
   ```json
   {
@@ -205,7 +139,7 @@ Alguns exemplos:
   }
   ```
 
-- Deve conter uma tabela chamada **BlogPosts**, contendo dados com a seguinte estrutura::
+- A tabela **BlogPosts** contém dados com a seguinte estrutura::
 
   ```json
   {
@@ -940,6 +874,3 @@ Se o token for inválido o resultado retornado deverá ser conforme exibido abai
 
 ![blogpost com token inválido](./public/buscarpostcomtokeninvalido.png)
 
-
-
----
